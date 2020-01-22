@@ -21,6 +21,7 @@ public class NetworkUtils {
     private static final String SEARCH_BY_NAME_VALUE = "s";   //0
     private static final String SEARCH_BY_FIRST_LETTER = "f"; //1
 
+
     public static final int SEARCH_BY_NAME = 0;
     public static final int SEARCH_BY_LETTER = 1;
 
@@ -71,7 +72,7 @@ public class NetworkUtils {
         protected JSONObject doInBackground(URL... urls) {
             JSONObject result = null;
             if (urls == null || urls.length == 0) {
-                return  result;
+                return null;
             } else {
                 HttpURLConnection connection = null;
                 try {
