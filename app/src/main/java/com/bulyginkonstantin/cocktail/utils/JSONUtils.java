@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JSONUtils {
 
@@ -19,6 +20,8 @@ public class JSONUtils {
     private static final String KEY_STR_INSTRUCTIONS = "strInstructions";
     private static final String KEY_STR_DRINK_THUMB = "strDrinkThumb";
     private static final String KEY_DATE_MODIFIED = "dateModified";
+    private static final String KEY_INGREDIENTS = "strIngredient";
+
 
     public static ArrayList<Cocktail> getCocktailsFromJSON(JSONObject jsonObject) {
         ArrayList<Cocktail> result = new ArrayList<>();
@@ -41,8 +44,16 @@ public class JSONUtils {
                 String strInstructions = objectCocktail.getString(KEY_STR_INSTRUCTIONS);
                 String strDrinkThumb = objectCocktail.getString(KEY_STR_DRINK_THUMB);
                 String dateModified = objectCocktail.getString(KEY_DATE_MODIFIED);
+                List<String> ingredients = new ArrayList<>();
 
-                cocktail = new Cocktail(id, strDrink, strCategory, strAlcoholic, strGlass, strInstructions, strDrinkThumb, dateModified);
+                //var k depends from cocktail database
+                for (int k = 1; k <= 15; k++) {
+                    String ingredient = objectCocktail.getString(KEY_INGREDIENTS + k);
+                    if (!ingredient.equals("null")) {
+                        ingredients.add(ingredient);
+                    }
+                }
+                cocktail = new Cocktail(id, strDrink, strCategory, strAlcoholic, strGlass, strInstructions, strDrinkThumb, dateModified, ingredients);
                 result.add(cocktail);
             }
 

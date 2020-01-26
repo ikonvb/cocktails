@@ -17,6 +17,24 @@ import java.util.ArrayList;
 public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder> {
 
     private ArrayList<Cocktail> cocktails;
+    private OnCocktailClickListener onCocktailClickListener;
+    private OnReachEndListener onReachEndListener;
+
+    interface OnCocktailClickListener {
+        void onCocktailClick(int position);
+    }
+
+    interface OnReachEndListener {
+        void onReachEnd();
+    }
+
+    public void setOnReachEndListener(OnReachEndListener onReachEndListener) {
+        this.onReachEndListener = onReachEndListener;
+    }
+
+    public void setOnCocktailClickListener(OnCocktailClickListener onCocktailClickListener) {
+        this.onCocktailClickListener = onCocktailClickListener;
+    }
 
     public CocktailAdapter() {
         cocktails = new ArrayList<>();
@@ -40,12 +58,14 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.Cockta
     @Override
     public CocktailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cocktail_item, parent, false);
-
         return new CocktailViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CocktailViewHolder holder, int position) {
+        if (position > cocktails.size() - 4 && onReachEndListener != null) {
+            onReachEndListener.onReachEnd();
+        }
         Cocktail cocktail = cocktails.get(position);
         holder.textViewCocktailName.setText(cocktail.getStrDrink());
         Picasso.get().load(cocktail.getStrDrinkThumb()).into(holder.imageViewSmallPoster);
@@ -61,10 +81,19 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.Cockta
         private ImageView imageViewSmallPoster;
         private TextView textViewCocktailName;
 
+
         public CocktailViewHolder(@NonNull View itemView) {
             super(itemView);
             imageViewSmallPoster = itemView.findViewById(R.id.imageViewSmallPoster);
             textViewCocktailName = itemView.findViewById(R.id.textViewCocktailName);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onCocktailClickListener != null) {
+                        onCocktailClickListener.onCocktailClick(getAdapterPosition());
+                    }
+                }
+            });
         }
     }
 }

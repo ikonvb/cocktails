@@ -1,7 +1,14 @@
 package com.bulyginkonstantin.cocktail.data;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.util.List;
+
+@Entity(tableName = "cocktails")
 public class Cocktail {
 
+    @PrimaryKey
     private int id;
     private String strDrink;
     private String strCategory;
@@ -10,8 +17,9 @@ public class Cocktail {
     private String strInstructions;
     private String strDrinkThumb;
     private String dateModified;
+    private List<String> ingredients;
 
-    public Cocktail(int id, String strDrink, String strCategory, String strAlcoholic, String strGlass, String strInstructions, String strDrinkThumb, String dateModified) {
+    public Cocktail(int id, String strDrink, String strCategory, String strAlcoholic, String strGlass, String strInstructions, String strDrinkThumb, String dateModified, List<String> ingredients) {
         this.id = id;
         this.strDrink = strDrink;
         this.strCategory = strCategory;
@@ -20,8 +28,16 @@ public class Cocktail {
         this.strInstructions = strInstructions;
         this.strDrinkThumb = strDrinkThumb;
         this.dateModified = dateModified;
+        this.ingredients = ingredients;
     }
 
+    public List<String> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<String> ingredients) {
+        this.ingredients = ingredients;
+    }
 
     public int getId() {
         return id;

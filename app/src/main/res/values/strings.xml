@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Cocktail</string>
     <string name="cocktail_photo">cocktail_photo</string>
+    <string name="cocktail_welcome">Cocktail</string>
+    <string name="welcome_text1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+    <string name="welcome_text2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+    <string name="welcome_text3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</string>
+    <string name="advance">Advance</string>
+    <string name="find_by_name">Find by name</string>
+    <string name="find_by_letter">Find by letter</string>
+    <string name="enter_the_name">Enter the name</string>
+    <string name="search">Search</string>
+    <string name="enter_the_letter">Enter the letter</string>
+    <string name="arrow_right">arrow_right</string>
 </resources>
