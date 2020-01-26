@@ -12,4 +12,11 @@
     <string name="search">Search</string>
     <string name="enter_the_letter">Enter the letter</string>
     <string name="arrow_right">arrow_right</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="last_date_modify">Last time modified:</string>
+    <string name="glass">glass:</string>
+    <string name="alcoholic">alcoholic:</string>
+    <string name="style">style:</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
 </resources>

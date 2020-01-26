@@ -13,10 +13,11 @@ import com.bulyginkonstantin.cocktail.data.Cocktail;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder> {
 
-    private ArrayList<Cocktail> cocktails;
+    private List<Cocktail> cocktails;
     private OnCocktailClickListener onCocktailClickListener;
     private OnReachEndListener onReachEndListener;
 
@@ -45,11 +46,11 @@ public class CocktailAdapter extends RecyclerView.Adapter<CocktailAdapter.Cockta
         notifyDataSetChanged();
     }
 
-    public ArrayList<Cocktail> getCocktails() {
+    public List<Cocktail> getCocktails() {
         return cocktails;
     }
 
-    public void setCocktails(ArrayList<Cocktail> cocktails) {
+    public void setCocktails(List<Cocktail> cocktails) {
         this.cocktails = cocktails;
         notifyDataSetChanged();
     }

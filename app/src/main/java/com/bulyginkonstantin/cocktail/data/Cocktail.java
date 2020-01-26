@@ -2,10 +2,14 @@ package com.bulyginkonstantin.cocktail.data;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.bulyginkonstantin.cocktail.converters.ConverterIngredients;
 
 import java.util.List;
 
 @Entity(tableName = "cocktails")
+@TypeConverters(value = ConverterIngredients.class)
 public class Cocktail {
 
     @PrimaryKey
@@ -17,6 +21,7 @@ public class Cocktail {
     private String strInstructions;
     private String strDrinkThumb;
     private String dateModified;
+
     private List<String> ingredients;
 
     public Cocktail(int id, String strDrink, String strCategory, String strAlcoholic, String strGlass, String strInstructions, String strDrinkThumb, String dateModified, List<String> ingredients) {
