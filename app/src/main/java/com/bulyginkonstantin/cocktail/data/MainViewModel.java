@@ -14,15 +14,21 @@ public class MainViewModel extends AndroidViewModel {
 
     private static CocktailDatabase database;
     private LiveData<List<Cocktail>> cocktails;
+    private LiveData<List<FavouriteCocktail>> favouriteCocktails;
 
     public LiveData<List<Cocktail>> getCocktails() {
         return cocktails;
+    }
+
+    public LiveData<List<FavouriteCocktail>> getFavouriteCocktails() {
+        return favouriteCocktails;
     }
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         database = CocktailDatabase.getInstance(getApplication());
         cocktails = database.getCocktailDao().getAllCocktails();
+        favouriteCocktails = database.getCocktailDao().getAllFavouriteCocktails();
     }
 
     public Cocktail getCocktailById(int id) {
@@ -127,6 +133,72 @@ public class MainViewModel extends AndroidViewModel {
         protected Void doInBackground(Cocktail... cocktails) {
             if (cocktails != null && cocktails.length > 0) {
                 database.getCocktailDao().deleteOneCocktail(cocktails[0]);
+            }
+            return null;
+        }
+    }
+
+
+    public void insertFavouriteCocktail(FavouriteCocktail cocktail) {
+        try {
+            new InsertFavouriteCocktailTask().execute(cocktail).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static class InsertFavouriteCocktailTask extends AsyncTask<FavouriteCocktail, Void, Void> {
+
+        @Override
+        protected Void doInBackground(FavouriteCocktail... cocktails) {
+            if (cocktails != null && cocktails.length > 0) {
+                database.getCocktailDao().insertFavouriteCocktail(cocktails[0]);
+            }
+            return null;
+        }
+    }
+
+    public void deleteFavouriteCocktail(FavouriteCocktail cocktail) {
+        try {
+            new DeleteFavouriteCocktailTask().execute(cocktail).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static class DeleteFavouriteCocktailTask extends AsyncTask<FavouriteCocktail, Void, Void> {
+
+        @Override
+        protected Void doInBackground(FavouriteCocktail... cocktails) {
+            if (cocktails != null && cocktails.length > 0) {
+                database.getCocktailDao().deleteFavouriteCocktail(cocktails[0]);
+            }
+            return null;
+        }
+    }
+
+    public FavouriteCocktail getFavouriteCocktailById(int id) {
+        try {
+            return new GetFavouriteCocktailByIdTask().execute(id).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static class GetFavouriteCocktailByIdTask extends AsyncTask<Integer, Void, FavouriteCocktail> {
+
+        @Override
+        protected FavouriteCocktail doInBackground(Integer... integers) {
+
+            if (integers != null && integers.length > 0) {
+                return database.getCocktailDao().getFavouriteCocktailById(integers[0]);
             }
             return null;
         }

@@ -19,4 +19,6 @@
     <string name="style">style:</string>
     <string name="ingredients">Ingredients</string>
     <string name="instructions">Instructions</string>
+    <string name="remove_from_favourites">Remove from favourites</string>
+    <string name="a">Remove from favourites</string>
 </resources>

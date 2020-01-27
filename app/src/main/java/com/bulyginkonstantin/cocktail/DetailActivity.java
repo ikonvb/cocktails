@@ -2,13 +2,17 @@ package com.bulyginkonstantin.cocktail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bulyginkonstantin.cocktail.data.Cocktail;
+import com.bulyginkonstantin.cocktail.data.FavouriteCocktail;
 import com.bulyginkonstantin.cocktail.data.MainViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -22,14 +26,18 @@ public class DetailActivity extends AppCompatActivity {
     private TextView allIngredientsTextView;
     private TextView instructionsTextView;
     private MainViewModel viewModel;
+    private Button buttonChangeFavourites;
 
     private int id;
+    private Cocktail cocktail;
+    private FavouriteCocktail favouriteCocktail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        buttonChangeFavourites = findViewById(R.id.buttonChangeFavourites);
         cocktailImageView = findViewById(R.id.cocktailImageView);
         cocktailNameTextView = findViewById(R.id.cocktailNameTextView);
         glassTextView = findViewById(R.id.glassTextView);
@@ -45,7 +53,7 @@ public class DetailActivity extends AppCompatActivity {
             finish();
         }
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        Cocktail cocktail = viewModel.getCocktailById(id);
+        cocktail = viewModel.getCocktailById(id);
         Picasso.get().load(cocktail.getStrDrinkThumb()).into(cocktailImageView);
 
         cocktailNameTextView.setText(cocktail.getStrDrink());
@@ -54,7 +62,7 @@ public class DetailActivity extends AppCompatActivity {
         styleTextView.setText(cocktail.getStrCategory());
         instructionsTextView.setText(cocktail.getStrInstructions());
         showIngredients(cocktail);
-
+        setFavourite();
     }
 
     private void showIngredients(Cocktail cocktail) {
@@ -66,4 +74,27 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickChangeFavorites(View view) {
+
+
+        if (favouriteCocktail == null) {
+            viewModel.insertFavouriteCocktail(new FavouriteCocktail(cocktail));
+            Toast.makeText(this, R.string.add_to_favourites, Toast.LENGTH_SHORT).show();
+        } else {
+            viewModel.deleteFavouriteCocktail(favouriteCocktail);
+            Toast.makeText(this, R.string.remove_from_favourites, Toast.LENGTH_SHORT).show();
+        }
+
+        setFavourite();
+
+    }
+
+    private void setFavourite() {
+        favouriteCocktail = viewModel.getFavouriteCocktailById(id);
+        if (favouriteCocktail != null) {
+            buttonChangeFavourites.setText(R.string.remove_from_favourites);
+        } else {
+            buttonChangeFavourites.setText(R.string.add_to_favourites);
+        }
+    }
 }

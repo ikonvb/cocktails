@@ -9,7 +9,7 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface CoctailDao {
+public interface CocktailDao {
 
     @Query("SELECT * FROM cocktails")
     LiveData<List<Cocktail>> getAllCocktails();
@@ -28,5 +28,18 @@ public interface CoctailDao {
 
     @Delete
     void deleteOneCocktail(Cocktail cocktail);
+
+
+    @Query("SELECT * FROM favourite_cocktails")
+    LiveData<List<FavouriteCocktail>> getAllFavouriteCocktails();
+
+    @Query("SELECT * FROM favourite_cocktails WHERE id == :id")
+    FavouriteCocktail getFavouriteCocktailById(int id);
+
+    @Insert
+    void insertFavouriteCocktail(FavouriteCocktail cocktail);
+
+    @Delete
+    void deleteFavouriteCocktail(FavouriteCocktail cocktail);
 
 }
