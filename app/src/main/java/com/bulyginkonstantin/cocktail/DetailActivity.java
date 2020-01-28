@@ -2,12 +2,15 @@ package com.bulyginkonstantin.cocktail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -52,17 +55,20 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             finish();
         }
+
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         cocktail = viewModel.getCocktailById(id);
-        Picasso.get().load(cocktail.getStrDrinkThumb()).into(cocktailImageView);
-
-        cocktailNameTextView.setText(cocktail.getStrDrink());
-        glassTextView.setText(cocktail.getStrGlass());
-        alcoholicTextView.setText(cocktail.getStrAlcoholic());
-        styleTextView.setText(cocktail.getStrCategory());
-        instructionsTextView.setText(cocktail.getStrInstructions());
-        showIngredients(cocktail);
+        if (cocktail != null) {
+            Picasso.get().load(cocktail.getStrDrinkThumb()).into(cocktailImageView);
+            cocktailNameTextView.setText(cocktail.getStrDrink());
+            glassTextView.setText(cocktail.getStrGlass());
+            alcoholicTextView.setText(cocktail.getStrAlcoholic());
+            styleTextView.setText(cocktail.getStrCategory());
+            instructionsTextView.setText(cocktail.getStrInstructions());
+            showIngredients(cocktail);
+        }
         setFavourite();
+
     }
 
     private void showIngredients(Cocktail cocktail) {
@@ -76,17 +82,12 @@ public class DetailActivity extends AppCompatActivity {
 
     public void onClickChangeFavorites(View view) {
 
-
-        if (favouriteCocktail == null) {
+        if (favouriteCocktail == null && cocktail != null) {
             viewModel.insertFavouriteCocktail(new FavouriteCocktail(cocktail));
-            Toast.makeText(this, R.string.add_to_favourites, Toast.LENGTH_SHORT).show();
         } else {
             viewModel.deleteFavouriteCocktail(favouriteCocktail);
-            Toast.makeText(this, R.string.remove_from_favourites, Toast.LENGTH_SHORT).show();
         }
-
         setFavourite();
-
     }
 
     private void setFavourite() {
@@ -96,5 +97,28 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             buttonChangeFavourites.setText(R.string.add_to_favourites);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.mainPage:
+                Intent intentMainPage = new Intent(this, ChooseSearchActivity.class);
+                startActivity(intentMainPage);
+                break;
+            case R.id.favouritePage:
+                Intent intentFavourite = new Intent(this, FavouriteActivity.class);
+                startActivity(intentFavourite);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

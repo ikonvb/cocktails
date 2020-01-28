@@ -199,8 +199,9 @@ public class MainViewModel extends AndroidViewModel {
 
             if (integers != null && integers.length > 0) {
                 return database.getCocktailDao().getFavouriteCocktailById(integers[0]);
+            } else {
+                return null;
             }
-            return null;
         }
     }
 }

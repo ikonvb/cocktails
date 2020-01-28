@@ -21,4 +21,6 @@
     <string name="instructions">Instructions</string>
     <string name="remove_from_favourites">Remove from favourites</string>
     <string name="a">Remove from favourites</string>
+    <string name="main_page">Main page</string>
+    <string name="go_to_favourites">Go to Favourites</string>
 </resources>
